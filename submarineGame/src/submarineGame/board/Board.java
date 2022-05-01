@@ -32,17 +32,6 @@ public class Board {
 		return subBoard;
 	}
 
-
-	//methods
-//	private void initSubBoard() {
-//		subBoard=new char[X_SIZE_OF_BOARD][Y_SIZE_OF_BOARD];
-//		for (int i = 0; i < subBoard.length; i++) {
-//			for (int j = 0; j < subBoard[i].length; j++) {
-//				subBoard[i][j] =' ';
-//			}
-//		}
-//	}
-
 	private void initSubBoard() {
 		subBoard=new char[X_SIZE_OF_BOARD+2][Y_SIZE_OF_BOARD+2];
 		for (int i = 0; i < subBoard.length; i++) {
@@ -89,66 +78,97 @@ public class Board {
 	}
 
 
+	public void putAllSubmarineInBoard(){
+		for (int i = 0; i < this.submarines.length; i++) {
+			putSubmarineInBoard(this.submarines[i]);
+		}
+	}
 
-	public void putSubmarineInBoard(Submarine submarine){
+	private void putSubmarineInBoard(Submarine submarine){
 		int i,j;
+//		 System.out.println("size: "+submarine.getSize());
 		do {
 			submarine.createRandomStartIndex(X_SIZE_OF_BOARD,Y_SIZE_OF_BOARD);
 			i=submarine.getxIndex()[0];
 			j=submarine.getyIndex()[0];
-			System.out.println("i: "+ i +" j: "+j);
 		}while(!isOk(i,j));
 		
 		this.subBoard[i][j]='c';
-		if(submarine.getSize()<=1)
+		if(submarine.getSize()<=1) {
+			markSubmarine(submarine);
 			return;
-	
+		}
+			
 		for (int k = 1; k < submarine.getSize(); k++) {
 			int next=randomPlase();
-			System.out.println(next);
 			switch (next) {
-			case 0://up
-				i++;
+			case 0: i++;//down
 				break;
-			case 1://down 
-				i--;
+			case 1: i--;//up 
 				break;
-			case 2: //right
-				j++;	
+			case 2: j++; //right	
 				break;
-			case 3: //left
-				j--;
+			case 3: j--;//left
 				break;
 			}
 
 			if(isOk(i,j)){
-				System.out.println("i: "+ i +" j: "+j);
 				this.subBoard[i][j]='c';
 				submarine.putValueInIndex(k,i,j);
 			}
 			else {
-				
+				deleteSubmarine(submarine,k);
+				submarine.initIndexes();
+				System.out.println("canot crate");
+				putSubmarineInBoard(submarine);
 			}
 		}
-
-
+		markSubmarine(submarine);
 	}
-
+	
+	
+	
+	private void markSubmarine(Submarine submarine) {
+		int i,j;
+		for (int k = 0; k <submarine.getSize() ; k++) {
+			i=submarine.getxIndex()[k];
+			j=submarine.getyIndex()[k];
+			subBoard[i][j] ='s';
+			if(subBoard[i+1][j] !='s' && subBoard[i+1][j] !='#' && subBoard[i+1][j] !='-')//down
+				subBoard[i+1][j] ='#';
+			
+			if(subBoard[i-1][j] !='s'&& subBoard[i+1][j] !='-')//up
+				subBoard[i-1][j] ='#';
+			
+			if(subBoard[i][j+1] !='s'&& subBoard[i+1][j] !='-')//right
+				subBoard[i][j+1] ='#';
+			
+			if(subBoard[i][j-1] !='s'&& subBoard[i+1][j] !='-')
+				subBoard[i][j-1] ='#';//left
+			
+		}
+	}
+	
+	
+	private void deleteSubmarine(Submarine submarine,int k) {
+		for (int i = 0; i <k ; i++) {
+			if(submarine.getxIndex()[i]!=-1 &&submarine.getyIndex()[i]!=-1)
+			subBoard[submarine.getxIndex()[i]][submarine.getyIndex()[i]] =' ';
+		}
+	}
+	
+	
 	private int randomPlase() {
 		Random random = new Random();
 		int plase = random.nextInt(3);
 		return plase;
-//		return 2;
 	}
 
 
-
-
 	private boolean isOk(int i,int j) {
-		if(this.subBoard[i][j]=='s' || this.subBoard[i][j]=='f' || this.subBoard[i][j]=='-')//s-for submarine, f for frame
+		if(this.subBoard[i][j]=='s' || this.subBoard[i][j]=='#' || this.subBoard[i][j]=='-')//s-for submarine, f for submarine frame, - -for frame
 			return false;
-//		return isUpOk(i,j) && isdownOk(i,j) && isRightOk(i,j) && isLeftOk(i,j) ;
-		return true;
+		return isUpOk(i,j) && isdownOk(i,j) && isRightOk(i,j) && isLeftOk(i,j) ;
 	}
 
 

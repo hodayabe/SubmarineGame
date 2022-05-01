@@ -12,21 +12,21 @@ public class Submarine {
 	//Constructor
 	public Submarine() {
 		this.size =createRandomSize(MAX_SIZE-1)+1;
-//		this.size =4;
+		//		this.size =4;
 		this.xIndex=new int[size];
 		this.yIndex=new int[size];
 	}
 
 	//getters and setters
-	
+
 	public int getSize() {
 		return size;
 	}
-	
+
 	public int[] getxIndex() {
 		return xIndex;
 	}
-	
+
 	public int[] getyIndex() {
 		return yIndex;
 	}
@@ -44,13 +44,18 @@ public class Submarine {
 		this.yIndex[0]= createRandomSize(YSize);
 	}
 
-	
+
 	public void putValueInIndex(int k, int i, int j) {
 		this.xIndex[k]=i;
 		this.yIndex[k]=j;
 	}
 
-
+	public void initIndexes() {
+		for (int i = 0; i <this.size; i++) {
+			xIndex[i]=-1;
+			yIndex[i]=-1;
+		}
+	}
 
 }
 

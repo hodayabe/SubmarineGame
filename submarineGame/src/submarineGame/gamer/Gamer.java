@@ -4,20 +4,33 @@ import submarineGame.Submarine.Submarine;
 import submarineGame.board.Board;
 
 public class Gamer {
+	private final int GUESSES=100;
+	private int points;
+	private Board board;
+	
+	public Gamer() {
+		this.board=new Board();
+		Submarine[] submarines= new Submarine[5];
+		submarines[0]=new Submarine();
+		submarines[1]=new Submarine();
+		submarines[2]=new Submarine();
+		submarines[3]=new Submarine();
+		submarines[4]=new Submarine();
+
+		
+	}
+	
 	
 	public void run() {
-		Board b=new Board();
-		Submarine sub=new Submarine();
-		
-		b.putSubmarineInBoard(sub);
+		this.board.putAllSubmarineInBoard();
 		
 		System.out.println("SubBoard");
-//		System.out.println("--------------------------\r\n");
-		b.printBoard(b.getSubBoard());
-		System.out.println("--------------------------\r\n");
+		this.board.printBoard(this.board.getSubBoard());
+		
+		System.out.println("\r--------------------------\r\n");
 		
 		System.out.println("UserBoard");
-		b.printBoard(b.getUserBoard());
+		this.board.printBoard(this.board.getUserBoard());
 		
 	}
 
