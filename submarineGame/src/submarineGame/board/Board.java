@@ -31,6 +31,13 @@ public class Board {
 	public char[][] getSubBoard() {
 		return subBoard;
 	}
+	
+	
+	public void setIndexInUserBoard(int x, int y,char c) {
+		this.userBoard[x][y]=c;
+	}
+	
+	
 
 	private void initSubBoard() {
 		subBoard=new char[X_SIZE_OF_BOARD+2][Y_SIZE_OF_BOARD+2];
@@ -172,28 +179,28 @@ public class Board {
 	}
 
 
-	private boolean isUpOk(int i,int j) {
-		if(this.subBoard[i-1][j]=='s'|| this.subBoard[i-1][j]=='f'|| this.subBoard[i-1][j]=='-')
+	private boolean isdownOk(int i,int j) {
+		if(this.subBoard[i-1][j]=='s'|| this.subBoard[i-1][j]=='#'|| this.subBoard[i-1][j]=='-')
 			return false;
 		return true;
 	}
 
 
-	private boolean isdownOk(int i,int j) {
-		if(this.subBoard[i+1][j]=='s'|| this.subBoard[i+1][j]=='f'|| this.subBoard[i+1][j]=='-')
+	private boolean isUpOk (int i,int j) {
+		if(this.subBoard[i+1][j]=='s'|| this.subBoard[i+1][j]=='#'|| this.subBoard[i+1][j]=='-')
 			return false;
 		return true;
 	}
 
 
 	private boolean isRightOk(int i,int j) {
-		if(this.subBoard[i][j+1]=='s'|| this.subBoard[i][j+1]=='f'||this.subBoard[i][j+1]=='-')
+		if(this.subBoard[i][j+1]=='s'|| this.subBoard[i][j+1]=='#'||this.subBoard[i][j+1]=='-')
 			return false;
 		return true;
 	}
 
 	private boolean isLeftOk(int i,int j) {
-		if(this.subBoard[i][j-1]=='s'|| this.subBoard[i][j-1]=='f' || this.subBoard[i][j-1]=='-')
+		if(this.subBoard[i][j-1]=='s'|| this.subBoard[i][j-1]=='#' || this.subBoard[i][j-1]=='-')
 			return false;
 
 		return true;

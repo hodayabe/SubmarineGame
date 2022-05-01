@@ -1,12 +1,11 @@
 package submarineGame.runner;
 
-import submarineGame.board.Board;
-import submarineGame.gamer.Gamer;
+import submarineGame.game.Game;
 
 public class Runner {
 
 	public static void main(String[] args) {
-		Gamer g=new Gamer();
+		Game g =new Game();
 		g.run();
 		
 		
